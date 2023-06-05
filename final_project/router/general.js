@@ -30,7 +30,6 @@ public_users.get('/', async (req, res) => {
       res.status(500).json({ message: "Failed to fetch books", error: error.message });
     }
   });
-  
 
 // Get book details based on ISBN
 public_users.get('/isbn/:isbn', function (req, res) {
@@ -50,7 +49,7 @@ public_users.get('/isbn/:isbn', function (req, res) {
       res.status(500).json({ message: "Failed to fetch book details", error: error.message });
     });
   });
-    
+
 // Get book details based on author
 public_users.get('/author/:author', async function (req, res) {
     try {
