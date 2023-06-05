@@ -48,9 +48,17 @@ public_users.get('/title/:title',function (req, res) {
 });
 
 //  Get book review
-    public_users.get('/review/:isbn',function (req, res) {
-    const reviews = req.params.isbn;
-    res.send(books[reviews])
-});
+    public_users.get('/review/:isbn', function (req, res) {
+    const isbn = req.params.isbn;
+    const book = books[isbn];
+  
+    if (book) {
+      const reviews = book.reviews || {};
+      const reviewsWithUsername = Object.entries(reviews).map(([username, review]) => ({ username, review }));
+      res.send(reviewsWithUsername);
+    } else {
+      res.status(404).json({ message: "Book not found." });
+    }
+  });
 
 module.exports.general = public_users;
