@@ -44,7 +44,7 @@ regd_users.post("/login", (req,res) => {
     req.session.authorization = {
       accessToken,username
   }
-  return res.status(200).send("User successfully logged in!");
+  return res.status(200).send("Costumer successfully logged in!");
   } else {
     return res.status(208).json({message: "Invalid Login. Check username and password."});
   }
@@ -61,16 +61,16 @@ regd_users.post("/login", (req,res) => {
     if (book) {
       if (book.reviews && book.reviews[username]) {
         book.reviews[username] = reviews;
-        return res.status(200).json({ message: "Review modified successfully!" });
+        return res.status(200).json({ message: "Review modified successfully by" + username + "!" });
       } else {
         if (!book.reviews) {
           book.reviews = {};
         }
         book.reviews[username] = reviews;
-        return res.status(200).json({ message: "Review added successfully!" });
+        return res.status(200).json({ message: "Review added successfully for book with ISBN " + isbn + " by " + username + "!" });
       }
     } else {
-      return res.status(404).json({ message: "Book not found." });
+      return res.status(404).json({ message: "Book with ISBN " + isbn + "not found." });
     }
   });
 
@@ -83,16 +83,16 @@ regd_users.post("/login", (req,res) => {
     if (book) {
       if (book.reviews && book.reviews[username]) {
         delete book.reviews[username];
-        return res.status(200).json({ message: "Review deleted successfully!" });
+        return res.status(200).json({ message: "Review deleted successfully for book with ISBN " + isbn + " by " + username + "!" });
       } else {
         if (!book.reviews) {
-          return res.status(404).json({ message: "No reviews found for this book." });
+          return res.status(404).json({ message: "No reviews found for book with ISBN " + isbn + "."});
         } else {
-          return res.status(404).json({ message: "Review not found for this user." });
+          return res.status(404).json({ message: "Review not found for this user " + username + "." });
         }
       }
     } else {
-      return res.status(404).json({ message: "Book not found." });
+      return res.status(404).json({ message: "Book with ISBN " + isbn + "not found." });
     }
   });  
 
